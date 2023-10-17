@@ -1,47 +1,54 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { reactive } from 'vue';
+import Formulario from './components/Formulario.vue';
+import Resultado from './components/Resultado.vue';
+
+const state = reactive({
+    filtro:'soma', 
+    num1: '',
+    num2: '',
+    resultado :'',
+})
+
+const soma = () =>{
+    const resultadoSoma = state.num1 + state.num2
+    state.resultado = resultadoSoma;
+    return state.resultado
+}
+
+const sub = () => {
+    const resultadoSub = state.num1 - state.num2
+    state.resultado = resultadoSub
+    return state.resultado
+}
+
+const mult = () => {
+    const resultadoMult = state.num1 * state.num2
+    state.resultado = resultadoMult
+    return state.resultado
+}
+
+const div = () => {
+    const resultadoDiv = state.num1 / state.num2
+    state.resultado = resultadoDiv
+    return  state.resultado
+}
 </script>
 
-<template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+<template >
+    <div class="container">
+        <Formulario :valorInput1="event => state.num1 = Number(event.target.value)" :valorInput2 = "event => state.num2 = Number(event.target.value)" :filtro="state.filtro" :selecioneFiltro="event =>state.filtro = event.target.value"/>
+        <Resultado :filtro="state.filtro" :funcaoSoma="soma()" :funcaoSub="sub()" :funcaoMult="mult()" :funcaoDiv="div()"/>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
+.container{
     display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
 }
 </style>
